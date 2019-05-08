@@ -1,3 +1,9 @@
+# Example how to make errors boundaries-like mechanism in MST
+
+see [src/mst.ts](src/mst.ts) and [src/mst.test.ts](src/mst.test.ts)  
+
+---
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
