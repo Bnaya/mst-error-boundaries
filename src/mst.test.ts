@@ -1,5 +1,11 @@
-import { getSnapshot } from "mobx-state-tree";
-import { Point, Box, Scene } from "./mst";
+import { getSnapshot, types } from "mobx-state-tree";
+import {
+  Point,
+  Box,
+  Scene,
+  addMSTErrorBoundary,
+  addMSTErrorBoundaryOnSimpleType
+} from "./mst";
 
 // jest > 24.5 has annoying issue with inline snapshot formatting right now
 // https://github.com/facebook/jest/issues/8424
@@ -127,4 +133,39 @@ describe("mst error boundaries test", () => {
       `);
     }
   );
+
+  test("Play with simple types", () => {
+    const numberWithStringToNumber = addMSTErrorBoundaryOnSimpleType(
+      types.number,
+      (error, snap) => {
+        if (typeof snap === "string") {
+          return Number.parseInt(snap, 10);
+        } else if (typeof snap === "number") {
+          return snap;
+        }
+
+        throw error;
+      }
+    );
+
+    const Model = types.model({
+      num: numberWithStringToNumber
+    });
+
+    expect(
+      getSnapshot(
+        Model.create({
+          num: 1
+        })
+      )
+    ).toMatchSnapshot();
+
+    expect(
+      getSnapshot(
+        Model.create({
+          num: "2" as any
+        })
+      )
+    ).toMatchSnapshot();
+  });
 });

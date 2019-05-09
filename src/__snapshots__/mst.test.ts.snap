@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mst error boundaries test Play with simple types 1`] = `
+Object {
+  "num": 1,
+}
+`;
+
+exports[`mst error boundaries test Play with simple types 2`] = `
+Object {
+  "num": 2,
+}
+`;

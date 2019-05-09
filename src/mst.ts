@@ -1,4 +1,4 @@
-import { types, typecheck, IAnyModelType } from "mobx-state-tree";
+import { types, typecheck, IAnyModelType, ISimpleType } from "mobx-state-tree";
 
 export function addMSTErrorBoundary<IT extends IAnyModelType>(
   Model: IT,
@@ -15,6 +15,29 @@ export function addMSTErrorBoundary<IT extends IAnyModelType>(
     preProcessor(snMaybeBad: IT["CreationType"]): IT["CreationType"] {
       try {
         typecheck(Model, snMaybeBad);
+        return snMaybeBad;
+      } catch (e) {
+        return getFallbackSnapshot(e, snMaybeBad);
+      }
+    }
+  });
+}
+
+export function addMSTErrorBoundaryOnSimpleType<IT extends string | number>(
+  SimpleType: ISimpleType<IT>,
+  /**
+   * Supply a valid snapshot to use, instead of the failing one
+   * We also give you the validation error of the snapshot, and the bad snapshot.
+   */
+  getFallbackSnapshot: (
+    error: unknown,
+    originalButBadSnapshot: IT | unknown
+  ) => IT
+) {
+  return types.snapshotProcessor(SimpleType, {
+    preProcessor(snMaybeBad: IT): IT {
+      try {
+        typecheck(SimpleType, snMaybeBad);
         return snMaybeBad;
       } catch (e) {
         return getFallbackSnapshot(e, snMaybeBad);
