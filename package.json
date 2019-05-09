@@ -25,13 +25,13 @@
       "last 1 safari version"
     ]
   },
+  "//jest > 24.5 has annoying issue": "https://github.com/facebook/jest/issues/8424",
   "devDependencies": {
     "@types/jest": "^24.0.12",
     "@types/node": "^8",
     "@types/react": "^16.8.17",
     "@types/react-dom": "^16.8.4",
     "eslint": "^5.16.0",
-    "jest": "^24.8.0",
     "mobx": "^5.9.4",
     "mobx-state-tree": "^3.14.0",
     "prettier": "^1.17.0",
@@ -44,5 +44,13 @@
   },
   "installConfig": {
     "pnp": true
+  },
+  "_//jest > 24.5 has annoying issue": "https://github.com/facebook/jest/issues/8424",
+  "_resolutions": {
+    "jest": "24.5",
+    "jest-cli": "24.5",
+    "@jest/core": "24.5",
+    "@jest/test-result": "24.5",
+    "babel-jest": "24.5"
   }
 }
